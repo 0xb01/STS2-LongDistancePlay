@@ -1,4 +1,5 @@
 using System;
+using CouchCoop.Mod;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 
@@ -14,6 +15,15 @@ public static class ModEntry
         if (_initialized) return;
         _initialized = true;
 
+        // 0. Headless Client check:
+        // CouchCoop launches child SlayTheSpire2.exe processes for each connected browser seat.
+        // A headless seat must NEVER initialize the host tunnel, kill processes, or attach overlays.
+        if (IsHeadlessClient())
+        {
+            ModLog.Info("Headless client seat detected; skipping host tunnel services.");
+            return;
+        }
+
         ModLog.Info("Initializing Long Distance Play (Cloudflare WAN)...");
 
         // 1. Configure CouchCoop environment variables:
@@ -28,14 +38,14 @@ public static class ModEntry
         var config = ModConfig.Instance;
         ModLog.Info($"Config loaded (AutoStart={config.AutoStart}, Port={config.TargetPort})");
 
-        // 3. Pre-kill any orphaned cloudflared processes and setup Job Object
+        // 3. Pre-kill any orphaned cloudflared processes from prior runs and setup Job Object
         CloudflareTunnelService.KillOrphanProcesses();
         JobObjectManager.Initialize();
 
         // 4. Ensure cleanup on process exit
         AppDomain.CurrentDomain.ProcessExit += (_, _) =>
         {
-            ModLog.Info("Process exiting, stopping tunnel...");
+            ModLog.Info("Host process exiting, stopping tunnel...");
             CloudflareTunnelService.Stop();
         };
 
@@ -61,5 +71,23 @@ public static class ModEntry
         {
             ModLog.Info("cloudflared.exe verified.");
         }
+    }
+
+    private static bool IsHeadlessClient()
+    {
+        if (Environment.GetEnvironmentVariable("COUCHCOOP_HEADLESS_CLIENT") == "1") return true;
+        try
+        {
+            if (CouchCoopMod.IsHeadlessClient) return true;
+        }
+        catch { }
+
+        string cmd = Environment.CommandLine;
+        if (cmd.Contains("headless", StringComparison.OrdinalIgnoreCase) ||
+            cmd.Contains("COUCHCOOP_HEADLESS", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        return false;
     }
 }

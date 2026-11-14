@@ -58,6 +58,7 @@
     <MakeDir Directories="$(TargetModDir)" Condition="!Exists('$(TargetModDir)')" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(TargetModDir)\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Delete Files="$(TargetModDir)\STS2-LongDistancePlay.deps.json" Condition="Exists('$(TargetModDir)\STS2-LongDistancePlay.deps.json')" />
+    <Delete Files="$(TargetModDir)\config.json" Condition="Exists('$(TargetModDir)\config.json')" />
     <Message Importance="high" Text="[STS2-LongDistancePlay] Deployed mod files to $(TargetModDir)" />
   </Target>
 

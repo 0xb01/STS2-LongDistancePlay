@@ -68,6 +68,14 @@ public static class CloudflareTunnelService
             {
                 try
                 {
+                    lock (SyncLock)
+                    {
+                        if (_process != null && proc.Id == _process.Id)
+                        {
+                            continue;
+                        }
+                    }
+
                     ModLog.Info($"Cleaning up existing cloudflared process (PID: {proc.Id})");
                     proc.Kill(entireProcessTree: true);
                     proc.WaitForExit(1000);

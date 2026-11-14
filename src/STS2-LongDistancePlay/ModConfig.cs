@@ -7,9 +7,10 @@ namespace STS2LongDistancePlay;
 
 public sealed class ModConfig
 {
+    // Named .cfg instead of .json because STS2 ModManager parses all *.json as mod manifests!
     private static readonly string ConfigPath = Path.Combine(
         Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".",
-        "config.json"
+        "config.cfg"
     );
 
     public bool AutoStart { get; set; } = true;
@@ -38,7 +39,7 @@ public sealed class ModConfig
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[STS2-LongDistancePlay] Failed to read config: {ex.Message}");
+            ModLog.Warn($"Failed to read config: {ex.Message}");
         }
 
         var defaultConfig = new ModConfig();
@@ -56,7 +57,7 @@ public sealed class ModConfig
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[STS2-LongDistancePlay] Failed to save config: {ex.Message}");
+            ModLog.Warn($"Failed to save config: {ex.Message}");
         }
     }
 }
