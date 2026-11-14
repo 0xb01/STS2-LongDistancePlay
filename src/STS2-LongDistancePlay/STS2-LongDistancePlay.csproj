@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</GameDir>
+    <GameDataDir>$(GameDir)\data_sts2_windows_x86_64</GameDataDir>
+    <CouchCoopDir>$(GameDir)\mods\couchcoop</CouchCoopDir>
+    <TargetModDir>$(GameDir)\mods\STS2-LongDistancePlay</TargetModDir>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="GodotSharp">
+      <HintPath>$(GameDataDir)\GodotSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="sts2">
+      <HintPath>$(GameDataDir)\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(GameDataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="QRCoder">
+      <HintPath>$(CouchCoopDir)\QRCoder.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="CouchCoop.Mod">
+      <HintPath>$(CouchCoopDir)\lanes\0.107.1\CouchCoop.Mod.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="CouchCoop.Mod.Contracts">
+      <HintPath>$(CouchCoopDir)\CouchCoop.Mod.Contracts.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="STS2-LongDistancePlay.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="DeployToGameMods" AfterTargets="Build" Condition="Exists('$(GameDir)\mods')">
+    <ItemGroup>
+      <DeployFiles Include="$(OutputPath)**\*.*" Exclude="$(OutputPath)**\*.deps.json" />
+    </ItemGroup>
+    <MakeDir Directories="$(TargetModDir)" Condition="!Exists('$(TargetModDir)')" />
+    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(TargetModDir)\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Delete Files="$(TargetModDir)\STS2-LongDistancePlay.deps.json" Condition="Exists('$(TargetModDir)\STS2-LongDistancePlay.deps.json')" />
+    <Message Importance="high" Text="[STS2-LongDistancePlay] Deployed mod files to $(TargetModDir)" />
+  </Target>
+
+</Project>
