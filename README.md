@@ -152,7 +152,12 @@ Compiles and auto-deploys to your local Steam STS2 installation.
 
 ---
 
+## 🤖 AI Assistance
+
+The mod artwork/banner (`preview.png`, `mod_image.png`) and packaging tooling scripts (`tools/`) were created with AI assistance. The core mod architecture, networking patches, and service logic in `/src/` is all me.
+
+---
+
 ## License
 
 This project is dedicated to the public domain under the [Creative Commons Zero v1.0 Universal](LICENSE) (CC0 1.0) license.
-
