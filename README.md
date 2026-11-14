@@ -8,9 +8,12 @@ Zero port-forwarding, zero VPNs, zero account setup. Friends join your run direc
 
 ---
 
-## Prerequisites
+## Prerequisites & Mod Compatibility
 
 - **[Couch Co-op](https://steamcommunity.com/sharedfiles/filedetails/?id=3799476240)** (Steam Workshop mod) must be installed and enabled.
+
+> [!WARNING]
+> **Mod Compatibility Notice:** This mod has not been fully tested with custom Character Skins, asset replacement packs, or heavy content overhaul mods. Running extensive skin/overhaul mods on the host may lead to desyncs, missing assets, or increased resource load across browser sessions.
 
 ---
 
@@ -79,6 +82,18 @@ mods/
 2. Enter your player name, select your character, and click **Ready**.
 3. Once all players are ready, the host clicks **Embark** to start the run!
 
+### 💡 What if the Host Wants to Play On-the-Go Too?
+
+The host PC controls **Player 1 (Seat 0)**. Opening the browser link on your own phone would assign you as Player 2, leaving Player 1 idle at home.
+
+To leave your PC running at home and play on-the-go with your friends:
+1. **Stream your host PC screen:** Use **[Steam Link](https://store.steampowered.com/app/353380/Steam_Link/)** (free on iOS/Android/macOS), **[Moonlight](https://moonlight-stream.org/) / [Sunshine](https://github.com/LizardByte/Sunshine)**, or **[Parsec](https://parsec.app/)**.
+2. **Control Player 1 remotely:** Play from your mobile device or laptop with full host UI controls (Character Select, Embark, Deck, Combat).
+3. **Friends connect via browser:** Your friends continue connecting through their web browser using the Cloudflare WAN link or QR code!
+
+> [!TIP]
+> Ensure host PC sleep mode is set to **Never** (`Windows Settings > System > Power > Sleep: Never`). You can safely turn off your monitor.
+
 ---
 
 ## Key Features
@@ -87,6 +102,22 @@ mods/
 - **In-Game Lobby HUD:** Live status indicator, one-click clipboard copy, and full-screen QR code dialog.
 - **Seamless Reconnects:** If a player drops connection, their seat and deck are preserved for 2 minutes — simply refresh the browser tab to resume.
 - **Save & Quit Supported:** Saved multiplayer runs restore character slots when continued from **Load Game**.
+
+---
+
+## 🔧 Troubleshooting & Connection Issues
+
+If remote players encounter connection timeouts, infinite loading screens, or tunnel launch failures:
+
+- **Firewall Blocking (Most Common):**
+  - Antivirus or Windows Defender Firewall may block outbound tunnel traffic or local WebSocket relay.
+  - Temporarily disable firewall to test, or allow both applications through firewall rules:
+    - `SlayTheSpire2.exe` (in game root folder)
+    - `cloudflared.exe` (inside `mods/STS2-LongDistancePlay/`)
+  - In Windows: Navigate to **Windows Security > Firewall & network protection > Allow an app through firewall** -> check both Private and Public networks.
+- **Port In Use:** Ensure port `13337` (or configured `TargetPort` in `config.cfg`) is free from other running services.
+- **Third-Party VPN / Proxies:** Third-party VPNs or proxy tools may intercept WebSocket handshakes. Whitelist Slay the Spire 2 or test with VPN temporarily disconnected.
+- **Mod Conflicts (Skins / Overhauls):** Custom character skins or heavy gameplay overhaul mods have not been tested with remote browser rendering. If experiencing desyncs, missing sprites, or seat crashes, test with third-party skin/overhaul mods disabled.
 
 ---
 
