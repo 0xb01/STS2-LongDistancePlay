@@ -24,7 +24,7 @@ public static class ModEntry
             return;
         }
 
-        ModLog.Info("Initializing Long Distance Play (Cloudflare WAN)...");
+        ModLog.Info("Initializing Long Distance Play...");
 
         // 1. Configure CouchCoop environment variables:
         // Disable origin and local network checks so remote web browsers and WebSockets are allowed

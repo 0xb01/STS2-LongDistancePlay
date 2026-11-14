@@ -1,6 +1,6 @@
-# STS2-LongDistancePlay 🌐
+# Long Distance Play 🌐
 
-Play **Slay the Spire 2** on your mobile browser or laptop from anywhere in the world.
+A mod that bridges "Couch Co-op" from LAN to WAN, making it possible to play anywhere, on-the-go.
 
 Seamlessly bridges [CouchCoop](https://steamcommunity.com/sharedfiles/filedetails/?id=3799476240) with **Cloudflare Tunnels (`cloudflared`)** to provide instant, zero-configuration global WAN access without port forwarding or VPNs.
 
@@ -14,7 +14,7 @@ Seamlessly bridges [CouchCoop](https://steamcommunity.com/sharedfiles/filedetail
 - **Interactive QR Code Modal:** Displays high-contrast in-game QR code for remote friends or streamers on mobile devices.
 - **Auto Binary Downloader:** Ships with or automatically fetches the official `cloudflared.exe` binary.
 - **Clean Process Lifecycle:** Spawns and kills `cloudflared.exe` with the game/lobby to eliminate orphan background tasks.
-- **Custom Vanity Domain Support:** Optionally enter a Cloudflare Tunnel Token in `config.json` for persistent custom domains (e.g., `sts2.yourdomain.com`).
+- **Custom Vanity Domain Support:** Optionally enter a Cloudflare Tunnel Token in `config.cfg` for persistent custom domains (e.g., `sts2.yourdomain.com`).
 
 ---
 
@@ -46,7 +46,7 @@ Host PC (Slay the Spire 2)
 
 ---
 
-## Configuration (`config.json`)
+## Configuration (`config.cfg`)
 
 Created automatically next to `STS2-LongDistancePlay.dll`:
 

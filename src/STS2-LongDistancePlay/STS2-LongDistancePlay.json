@@ -1,9 +1,9 @@
 {
   "id": "STS2-LongDistancePlay",
-  "name": "Long Distance Play (Cloudflare WAN)",
-  "author": "johnn",
+  "name": "Long Distance Play",
+  "author": "0xb1",
   "version": "1.0.0",
-  "description": "Host Slay the Spire 2 in-browser games and tunnel worldwide via Cloudflare Quick Tunnels.",
+  "description": "A mod that bridges \"Couch Co-op\" from LAN to WAN, making it possible to play anywhere, on-the-go.",
   "has_pck": false,
   "has_dll": true,
   "dependencies": [
