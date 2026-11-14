@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <Version>0.1.0</Version>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -51,14 +52,19 @@
     </None>
   </ItemGroup>
 
+  <Target Name="PackPck" BeforeTargets="DeployToGameMods">
+    <Exec Command="python &quot;$(MSBuildThisFileDirectory)..\..\tools\pack_pck.py&quot; &quot;$(OutputPath)STS2-LongDistancePlay.pck&quot;" ContinueOnError="true" StandardOutputImportance="High" />
+  </Target>
+
   <Target Name="DeployToGameMods" AfterTargets="Build" Condition="Exists('$(GameDir)\mods')">
     <ItemGroup>
-      <DeployFiles Include="$(OutputPath)**\*.*" Exclude="$(OutputPath)**\*.deps.json" />
+      <DeployFiles Include="$(OutputPath)**\*.*" Exclude="$(OutputPath)**\*.deps.json;$(OutputPath)**\preview.png" />
     </ItemGroup>
     <MakeDir Directories="$(TargetModDir)" Condition="!Exists('$(TargetModDir)')" />
-    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(TargetModDir)\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(TargetModDir)\%(RecursiveDir)" SkipUnchangedFiles="false" />
     <Delete Files="$(TargetModDir)\STS2-LongDistancePlay.deps.json" Condition="Exists('$(TargetModDir)\STS2-LongDistancePlay.deps.json')" />
     <Delete Files="$(TargetModDir)\config.json" Condition="Exists('$(TargetModDir)\config.json')" />
+    <Delete Files="$(TargetModDir)\preview.png" Condition="Exists('$(TargetModDir)\preview.png')" />
     <Message Importance="high" Text="[STS2-LongDistancePlay] Deployed mod files to $(TargetModDir)" />
   </Target>
 

@@ -1,54 +1,98 @@
 # Long Distance Play 🌐
 
-A mod that bridges "Couch Co-op" from LAN to WAN, making it possible to play anywhere, on-the-go.
+![Long Distance Play](preview.png)
 
-Seamlessly bridges [CouchCoop](https://steamcommunity.com/sharedfiles/filedetails/?id=3799476240) with **Cloudflare Tunnels (`cloudflared`)** to provide instant, zero-configuration global WAN access without port forwarding or VPNs.
+> A mod that bridges **Couch Co-op** from LAN to WAN, making it possible to play Slay the Spire 2 anywhere, on-the-go.
 
----
-
-## Features
-
-- **Worldwide Access via Cloudflare Quick Tunnels:** Outbound HTTPS/WSS tunnel (`*.trycloudflare.com`) generated instantly. No account, no credit card, no port-forwarding required.
-- **In-Game Lobby HUD:** Sleek overlay on character select and multiplayer load screens displaying tunnel status, live URL, and one-click actions.
-- **Clipboard Sync:** Copies the public join link to your clipboard automatically on launch.
-- **Interactive QR Code Modal:** Displays high-contrast in-game QR code for remote friends or streamers on mobile devices.
-- **Auto Binary Downloader:** Ships with or automatically fetches the official `cloudflared.exe` binary.
-- **Clean Process Lifecycle:** Spawns and kills `cloudflared.exe` with the game/lobby to eliminate orphan background tasks.
-- **Custom Vanity Domain Support:** Optionally enter a Cloudflare Tunnel Token in `config.cfg` for persistent custom domains (e.g., `sts2.yourdomain.com`).
+Zero port-forwarding, zero VPNs, zero account setup. Friends join your run directly from their mobile browser or laptop via automated Cloudflare tunnels.
 
 ---
 
-## How It Works
+## Prerequisites
 
+- **[Couch Co-op](https://steamcommunity.com/sharedfiles/filedetails/?id=3799476240)** (Steam Workshop mod) must be installed and enabled.
+
+---
+
+## 🎮 How to Download & Install
+
+> [!NOTE]
+> Only the **Host** needs to install this mod and [Couch Co-op](https://steamcommunity.com/sharedfiles/filedetails/?id=3799476240). Remote players do not need to install anything—they just connect via their browser!
+
+Pre-packaged releases are separated per platform with one-click installers included in [**Releases**](../../releases).
+
+### Windows
+
+1. Download `STS2-LongDistancePlay-v[version]-Windows.zip` from **Releases**.
+2. Extract the archive.
+3. Run `Install.bat` to install automatically (or manually copy the `STS2-LongDistancePlay` folder to `<Slay the Spire 2>/mods/`).
+4. Launch the game.
+
+### macOS (Apple Silicon / Intel)
+
+1. Download `STS2-LongDistancePlay-v[version]-macOS.zip` from **Releases**.
+2. Extract the archive.
+3. Double-click `Install.command` (or run `./install.sh` in Terminal) for automatic installation and `steam_appid.txt` setup.
+   - *Manual alternative:* Copy the `STS2-LongDistancePlay` folder to:
+     ```text
+     <Slay the Spire 2>/SlayTheSpire2.app/Contents/MacOS/mods/
+     ```
+     and ensure `steam_appid.txt` containing `2868840` exists in `<Slay the Spire 2>/SlayTheSpire2.app/Contents/MacOS/`.
+4. On Apple Silicon, run the game under Rosetta 2 (right-click `SlayTheSpire2.app` > **Get Info** > check **"Open using Rosetta"**).
+
+### Linux (Steam Deck / Desktop)
+
+1. Download `STS2-LongDistancePlay-v[version]-Linux.zip` from **Releases**.
+2. Extract the archive.
+3. Run `./install.sh` in Terminal for automatic installation (or manually copy the `STS2-LongDistancePlay` folder to `<Slay the Spire 2>/mods/`).
+4. Launch the game via Steam.
+
+---
+
+### Folder Structure Reference
+
+```text
+mods/
+  couchcoop/
+  STS2-LongDistancePlay/
+    STS2-LongDistancePlay.dll
+    STS2-LongDistancePlay.json
+    STS2-LongDistancePlay.pck
+    cloudflared.exe (optional, auto-downloads if missing)
 ```
-Host PC (Slay the Spire 2)
-  ├── CouchCoop Mod (Embedded WebSocket Server: localhost:13337)
-  ├── STS2-LongDistancePlay (Harmony + Godot UI Engine)
-  └── cloudflared.exe (Child Process)
-         │
-         ▼ (Encrypted Outbound Tunnel)
-  Cloudflare Anycast Global Edge (https://<random>.trycloudflare.com)
-         │
-         ▼ (HTTPS / WSS)
-  Remote Players (Safari / Chrome / Firefox on iOS, Android, Mac, PC)
-```
 
 ---
 
-## Installation & Usage
+## How to Use
 
-1. Ensure **CouchCoop** is installed in `Slay the Spire 2/mods/couchcoop`.
-2. Extract **STS2-LongDistancePlay** into `Slay the Spire 2/mods/STS2-LongDistancePlay`.
-3. Launch Slay the Spire 2.
-4. Host a multiplayer run -> On the Character Select screen, look at the top-right overlay.
-5. Click **Copy Link** or open the **QR Code** and share it with your remote players.
-6. Friends open the URL in their browser, select their character, and play!
+### For the Host (PC):
+1. In the main menu, click **Multiplayer -> Host Game** (or **Continue Run**).
+2. On the **Character Select** screen, a button will appear on the selection screen (`🌐 Long Distance Play`).
+3. Click **📋 Copy Link** (or open **📱 QR**).
+4. Send the link or show the QR code to your friends.
+5. Keep the game open in the lobby while players join.
+
+### For Remote Players (Phone / Tablet / Browser):
+1. Connect to the host using either method:
+   - **Scan QR Code:** Scan the host's in-game QR modal with your phone/tablet camera.
+   - **Type or Click URL:** Open the shared `https://<subdomain>.trycloudflare.com` link in any mobile or desktop browser (Safari, Chrome, Edge, Firefox).
+2. Enter your player name, select your character, and click **Ready**.
+3. Once all players are ready, the host clicks **Embark** to start the run!
 
 ---
 
-## Configuration (`config.cfg`)
+## Key Features
 
-Created automatically next to `STS2-LongDistancePlay.dll`:
+- **Global WAN Access:** Uses Cloudflare Quick Tunnels (`*.trycloudflare.com`) out-of-the-box. Free and instant.
+- **In-Game Lobby HUD:** Live status indicator, one-click clipboard copy, and full-screen QR code dialog.
+- **Seamless Reconnects:** If a player drops connection, their seat and deck are preserved for 2 minutes — simply refresh the browser tab to resume.
+- **Save & Quit Supported:** Saved multiplayer runs restore character slots when continued from **Load Game**.
+
+---
+
+## Configuration (Optional)
+
+`config.cfg` is generated automatically next to the `.dll`:
 
 ```json
 {
@@ -60,21 +104,24 @@ Created automatically next to `STS2-LongDistancePlay.dll`:
 }
 ```
 
-- `AutoStart`: Automatically start the Cloudflare tunnel upon entering the multiplayer lobby.
-- `AutoCopyUrl`: Automatically copy the public link to the host clipboard when ready.
-- `TargetPort`: Local port served by CouchCoop (default `13337`).
-- `TunnelToken`: Optional named Cloudflare tunnel token for persistent domains.
-- `EnableInGameOverlay`: Toggles the in-game HUD panel.
+- `TunnelToken`: (Optional) Enter a free Cloudflare Named Tunnel token for a permanent custom domain (e.g., `sts2.yourdomain.com`).
+- `AutoStart`: Automatically start the tunnel upon entering the multiplayer lobby.
+- `AutoCopyUrl`: Automatically copy the link to clipboard when the tunnel connects.
 
 ---
 
 ## Building from Source
 
-Requirements:
-- .NET 9.0 SDK
-- Windows x64
+Requirements: .NET 9.0 SDK, Windows x64.
 
 ```powershell
 dotnet build -c Release
 ```
-Mod files will compile and auto-deploy to your local Steam STS2 installation.
+Compiles and auto-deploys to your local Steam STS2 installation.
+
+---
+
+## License
+
+This project is dedicated to the public domain under the [Creative Commons Zero v1.0 Universal](LICENSE) (CC0 1.0) license.
+

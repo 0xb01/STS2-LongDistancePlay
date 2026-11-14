@@ -1,0 +1,16 @@
+{
+  "id": "STS2-LongDistancePlay",
+  "name": "Long Distance Play",
+  "author": "0xb1",
+  "version": "0.1.0",
+  "description": "A mod that bridges \"Couch Co-op\" from LAN to WAN, making it possible to play anywhere, on-the-go.",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    {
+      "id": "couchcoop",
+      "min_version": "0.6.0"
+    }
+  ],
+  "affects_gameplay": false
+}

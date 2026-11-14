@@ -1,7 +1,46 @@
+# Build & Package outputs
+build/
 bin/
 obj/
-*.user
-*.suo
-.vs/
+out/
+_zip_stage/
+*.zip
+*.pck
+
+# External / unmanaged binaries
 cloudflared.exe
+
+# Godot Engine Cache & Exports
+.godot/
+/android/
+.tools/
+*.translation
+
+# IDE & Editor state
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosv
+*.userprefs
+*.sln.docstates
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# Logs & Local User Configs
+*.log
+config.ini
+config.cfg
 *.tmp
