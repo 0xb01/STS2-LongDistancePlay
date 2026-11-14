@@ -70,7 +70,7 @@ mods/
 
 ### For the Host (PC):
 1. In the main menu, click **Multiplayer -> Host Game** (or **Continue Run**).
-2. On the **Character Select** screen, a button will appear on the selection screen (`🌐 Long Distance Play`).
+2. On the **Character Select** screen, a button will appear on the selection screen (`Couch Co-Op QR Code`).
 3. Click **📋 Copy Link** (or open **📱 QR**).
 4. Send the link or show the QR code to your friends.
 5. Keep the game open in the lobby while players join.
